@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/static/swagger-ui/swagger-ui.css">
+    <link rel="shortcut icon" href="/static/swagger-ui/favicon.png">
+    <title>API服务 - Swagger UI</title>
+</head>
+<body>
+    <div id="swagger-ui">
+    </div>
+    <script src="/static/swagger-ui/swagger-ui-bundle.js"></script>
+    <!-- `SwaggerUIBundle` is now available on the page -->
+    <script>
+        window.onload = function() {
+            // 配置Swagger UI
+            const ui = SwaggerUIBundle({
+                url: "/openapi.json",
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIBundle.SwaggerUIStandalonePreset
+                ],
+                layout: "BaseLayout",
+                docExpansion: "list",
+                defaultModelsExpandDepth: 1,
+                defaultModelExpandDepth: 1,
+                showExtensions: true
+            });
+            window.ui = ui;
+        };
+    </script>
+</body>
+</html>
