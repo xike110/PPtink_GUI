@@ -5,6 +5,8 @@
 
 开发手册/Development manual： [PPtink文档](https://gui.pengxukeji.cn/guide/)
 
+视频演示 / Video Demonstration :  [视频演示](https://www.bilibili.com/video/BV1B754zdEFm)
+
 github地址/GitHub address：[https://github.com/xike110/PPtink_GUI](https://github.com/xike110/PPtink_GUI)
 
 gitee地址/Gitee address：[https://gitee.com/xiaoyun_admin/PPtink_GUI.git](https://gitee.com/xiaoyun_admin/PPtink_GUI.git)
