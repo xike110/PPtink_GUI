@@ -33,6 +33,23 @@ with open('./config/config.yaml', 'r', encoding='utf-8') as file:
 DIST_DIR = F"{os.getcwd()}/vuecode/dist/webdemo.html"  # 软件主界面的WEB路径="webdemo.html"
 # ======================= 组件配置 ==========================
 # redis_cache = redis.Redis(host='121.11.119.111', port=36379, db=10, password='123456')
+# ======================= 日志配置 ==========================
+# 日志配置-日志文件大小50MB 保留10份,在原日志文件追加
+LOG_MAX_BYTES = 50 * 1024 * 1024  # 日志文件大小
+LOG_MAX_SIZE = 50 * 1024 * 1024  # 日志文件大小
+LOG_DIR = "log"
+LOG_BACKUP_COUNT = 10
+LOG_FILENAME = F"log/log_{datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')}.log"  # 日志文件路径
+LOG_LEVEL = logging.DEBUG
+logging.basicConfig(
+    filename=LOG_FILENAME,
+    level=LOG_LEVEL,
+    format='%(asctime)s.%(msecs)03d - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    filemode='w',
+    encoding='utf-8'
+
+)
 # ======================= 内容配置 ==========================
 ASKED_QUESTIONS = [
     {
