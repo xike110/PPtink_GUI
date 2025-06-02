@@ -115,6 +115,8 @@ Supports packaging the application into standalone executable files for easy dis
 ```bash
 python auto-py-to-exe
 ```
+打包设置
+
 ![打包设置](markdown/img/dabao.jpg)
 
 打包后复制 下面目录到打包的 output 目录下
@@ -148,6 +150,10 @@ python auto-py-to-exe
 ]
 
 ```
+目录迁移复制
+
+![目录迁移复制](markdown/img/mulu.jpg)
+
 ## 许可证 / License
 [添加项目许可证信息 / Add project license information]
 
@@ -576,3 +582,4 @@ self.gui_config.add_argument(
 # 返回当前配置
 return self.gui_config.to_dict()
 ```
+v
