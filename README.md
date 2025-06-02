@@ -114,8 +114,11 @@ python main.py
 Supports packaging the application into standalone executable files for easy distribution and installation.
 ```bash
 python auto-py-to-exe
+```
+![打包设置](markdown/img/dabao.jpg)
 
-打包后复制 下面目录到打包的目录下
+打包后复制 下面目录到打包的 output 目录下
+```
 [
     {
         "目录名": "缓存目录",
