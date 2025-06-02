@@ -114,6 +114,36 @@ python main.py
 Supports packaging the application into standalone executable files for easy distribution and installation.
 ```bash
 python auto-py-to-exe
+
+打包后复制 下面目录到打包的目录下
+[
+    {
+        "目录名": "缓存目录",
+        "源码路径": "/cache",
+        "迁移打包路径": "/output/main/cache",
+    }, {
+        "目录名": "日志目录",
+        "源码路径": "/log",
+        "迁移打包路径": "/output/main/log",
+    }, {
+        "目录名": "配置目录",
+        "源码路径": "/config",
+        "迁移打包路径": "/output/main/config",
+    }, {
+        "目录名": "demo应用静态目录",
+        "源码路径": "/app/WebDemo/static",
+        "迁移打包路径": "/output/main/_internal/app/WebDemo/static",
+    }, {
+        "目录名": "公共资源目录",
+        "源码路径": "/public",
+        "迁移打包路径": "/output/main/public",
+    }, {
+        "目录名": "VUE编译目录",
+        "源码路径": "/vuecode/dist",
+        "迁移打包路径": "/output/main/vuecode/dist",
+    }
+]
+
 ```
 ## 许可证 / License
 [添加项目许可证信息 / Add project license information]
