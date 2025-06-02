@@ -1,4 +1,5 @@
 运行主程序入口：main.py
+app/WebDemo/utils/conf.py 是配置文件，控制界面GUI的显示与交互,编写使用帮助请修改conf.py的ASKED_QUESTIONS ，编写软件介绍 请修改conf.py 的ABOUTUS
 app/WebDemo/RunCode.py  如果存在演示代码.先删掉演示的 界面交互组件代码范围从第67行-482行，在这个文件编写生成界面的代码与传参。
 app/WebDemo/services/RunTask.py  编写接收参数的具体业务逻辑代码, 并返回结果,控制进度条等待，def process_args(self, args):是示例代码
 app/WebDemo/common/validate.py  编写验证函数,带入到生成界面交互组件代 的 validate=参数中, 会在前端提交时候飘红提示，填写参数的格式约束提示等等,后端接收也会同步于验证
@@ -6,7 +7,8 @@ config/config.yaml 是配置文件,可以添加后端非交互执行的参数，
 database/Models.py 是数据库文件，如果要持久化存储,可以在 database/Models.py中添加数据库表，markdown/SQLAlchemy增删改查/ 是数据增删改查文档目录可以阅读
 utils/gui_tkinter.py 是tkinter原生交互组件代码，执行过程中需要弹出原生交互的可要编写在 utils/gui_tkinter.py中
 utils/Request.py 是请求封装文件，如果要调用接口，可以在 utils/Request.py中编写接口请求代码
-log/是日志目录，可以查看最近日期的日志文件，获取错误 日志，查看错误日志
+log/是日志目录，可以查看最新日期名称的一个日志文件，获取错误 日志，查看错误日志
+开发过程中如果需要缓存,以安装 diskcache缓存，使用方法导入from app.WebDemo.utils import conf 使用方法conf.cache.get('缓存KEY', None)
 生成界面交互组件代码如下（根据需要添加）：
 ```Python
 # 添加表单组件演示菜单
