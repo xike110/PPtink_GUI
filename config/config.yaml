@@ -1,0 +1,7 @@
+MainConfig:
+  url: "http://8001.pptink.com/"  # 主服务网站地址
+  event: "http://127.0.0.1/post_demo"  # 回调地址
+  ip: "0.0.0.0"
+  guiport: "8166" #gui端口
+GitConfig:
+  branch: "develop"

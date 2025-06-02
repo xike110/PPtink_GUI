@@ -16,6 +16,5 @@ vitepress/pptink/docs/.vitepress/cache
 vitepress/pptink/docs/.vitepress/dist
 vitepress/pptink/node_modules
 vuecode/psdtool.html
-config/config.yaml
 vuecode/vite.config.ts
 app/WebGuiMain/utils/conf.py
