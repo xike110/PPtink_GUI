@@ -92,7 +92,10 @@ pip install sqlalchemy
 pip install pywin32
 pip install schedule
 ```
-
+### 配置软件界面参数 / Configure Software Interface
+```
+app/WebDemo/utils/conf.py
+```
 ### 前端构建流程 / Frontend Build Process
 ```bash
 npm install # 安装前端依赖 / Install frontend dependencies
@@ -110,7 +113,7 @@ python main.py
 
 Supports packaging the application into standalone executable files for easy distribution and installation.
 ```bash
-python auto-py-to-e
+python auto-py-to-exe
 ```
 ## 许可证 / License
 [添加项目许可证信息 / Add project license information]
