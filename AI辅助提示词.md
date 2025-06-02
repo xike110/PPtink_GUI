@@ -1,15 +1,39 @@
-运行主程序入口：main.py
-app/WebDemo/utils/conf.py 是配置文件，控制界面GUI的显示与交互,编写使用帮助请修改conf.py的ASKED_QUESTIONS ，编写软件介绍 请修改conf.py 的ABOUTUS
-app/WebDemo/RunCode.py  如果存在演示代码.先删掉演示的 界面交互组件代码范围从第67行-482行，在这个文件编写生成界面的代码与传参。
-app/WebDemo/services/RunTask.py  编写接收参数的具体业务逻辑代码, 并返回结果,控制进度条等待，def process_args(self, args):是示例代码
-app/WebDemo/common/validate.py  编写验证函数,带入到生成界面交互组件代 的 validate=参数中, 会在前端提交时候飘红提示，填写参数的格式约束提示等等,后端接收也会同步于验证
-config/config.yaml 是配置文件,可以添加后端非交互执行的参数，和 默认参数并添加到界面交互组件中的default=配置文件参数
-database/Models.py 是数据库文件，如果要持久化存储,可以在 database/Models.py中添加数据库表，markdown/SQLAlchemy增删改查/ 是数据增删改查文档目录可以阅读
-utils/gui_tkinter.py 是tkinter原生交互组件代码，执行过程中需要弹出原生交互的可要编写在 utils/gui_tkinter.py中
-utils/Request.py 是请求封装文件，如果要调用接口，可以在 utils/Request.py中编写接口请求代码
-log/是日志目录，可以查看最新日期名称的一个日志文件，获取错误 日志，查看错误日志
-开发过程中如果需要缓存,以安装 diskcache缓存，使用方法导入from app.WebDemo.utils import conf 使用方法conf.cache.get('缓存KEY', None)
-生成界面交互组件代码如下（根据需要添加）：
+# AI 辅助提示词
+
+## 主程序入口
+运行主程序入口：`main.py`
+
+## 核心配置文件
+- `app/WebDemo/utils/conf.py`: 配置文件，用于控制界面 GUI 的显示与交互。
+  - 编写使用帮助请修改 `conf.py` 的 `ASKED_QUESTIONS`。
+  - 编写软件介绍请修改 `conf.py` 的 `ABOUTUS`。
+- `config/config.yaml`: 配置文件，可添加后端非交互执行的参数和默认参数，并添加到界面交互组件的 `default` 配置中。
+
+## 业务逻辑文件
+- `app/WebDemo/RunCode.py`: 如果存在演示代码，请先删除演示的界面交互组件代码（范围从第67行-482行），在此文件编写生成界面的代码与传参。
+- `app/WebDemo/services/RunTask.py`: 编写接收参数的具体业务逻辑代码并返回结果，控制进度条等待。`def process_args(self, args):` 是示例代码。
+- `app/WebDemo/common/validate.py`: 编写验证函数，带入到生成界面交互组件代码的 `validate` 参数中。前端提交时会显示红色提示，提供参数格式约束提示等，后端接收时也会同步验证。
+
+## 数据相关
+- `database/Models.py`: 数据库文件，如果需要持久化存储，可在此文件中添加数据库表。`markdown/SQLAlchemy增删改查/` 是数据增删改查文档目录，可供阅读。
+
+## 其他工具与功能
+- `utils/gui_tkinter.py`: Tkinter 原生交互组件代码，执行过程中需要弹出原生交互界面可在此文件编写。
+- `utils/Request.py`: 请求封装文件，如果需要调用接口，可在此文件编写接口请求代码。
+- `log/`: 日志目录，可查看最新日期名称的日志文件，获取错误日志。
+- **缓存**: 开发过程中如果需要缓存，已安装 `diskcache` 缓存。使用方法：导入 `from app.WebDemo.utils import conf`，使用 `conf.cache.get('缓存KEY', None)`。
+
+## 开发流程建议
+- `首先配置conf.py中的界面文本
+- `在RunCode.py中设计界面组件
+- `在validate.py中添加参数验证规则
+- `在RunTask.py中实现业务逻辑
+- `如需持久化，修改Models.py并参考SQLAlchemy文档
+- `通过日志系统调试和排查问题
+
+## 生成界面交互组件代码示例
+以下是生成界面交互组件的代码示例（根据需要添加）：
+
 ```Python
 # 添加表单组件演示菜单
 self.gui_config.add_menu("常用组件", "是一个组常用框体演示")
