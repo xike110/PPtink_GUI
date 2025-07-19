@@ -71,6 +71,7 @@ class GooeyConfig:
         self.program_description = program_description  # 程序描述
         self.menus = []  # 菜单列表
         self.current_menu = None  # 当前活动菜单
+        self.current_group = None  # 当前活动分组
         self.navigation_items = []  # 导航项
 
     def add_menu(self, name: str, help: str) -> MenuConfig:
@@ -78,6 +79,8 @@ class GooeyConfig:
         menu = MenuConfig(name, help)
         self.menus.append(menu)
         self.current_menu = menu
+        # 重置当前分组
+        self.current_group = None
         # 添加到导航项
         self.navigation_items.append({"name": name, "type": "menu", "help": help})
         return menu
@@ -167,8 +170,13 @@ class GooeyConfig:
         )
         component.update(widget_options)
 
-        # 添加到当前菜单
-        self.current_menu.add_component(component)
+        # 添加到当前分组或菜单
+        if self.current_group is not None:
+            # 如果有活动分组，添加到分组中
+            self.current_group["components"].append(component)
+        else:
+            # 否则添加到菜单的直接组件列表中
+            self.current_menu.add_component(component)
 
     def add_argument_group(self, title: str, description: str = "", **kwargs) -> Dict[str, Any]:
         """
@@ -188,6 +196,8 @@ class GooeyConfig:
 
         if self.current_menu:
             self.current_menu.add_group(group)
+            # 设置当前活动分组
+            self.current_group = group
 
         return group
 

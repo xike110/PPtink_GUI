@@ -1,16 +1,16 @@
 import time
 import asyncio  # 导入 asyncio 库
 import json
-
+import base64
 import logging
 import os
 import stat
 import sys
-import webview
+import threading
+import subprocess
 from app.WebDemo.utils import conf
 from app.WebDemo.common.GuiConfig import GooeyConfig
 from app.WebDemo.services.RunTask import Task
-from app.WebDemo.services.Server import Server
 from app.WebDemo.common.validate import Verify
 
 
@@ -70,7 +70,7 @@ class RunCode(Task):
         # 添加表单组件演示菜单
         self.gui_config.add_menu("常用组件", "是一个组常用框体演示")
         # --------------------------添加基本输入框分组-------------------------------------
-        self.gui_config.add_argument_group("基本输入框(分组)", description="基本的输入控件", gooey_options={"show_border": True, "columns": 2})
+        self.gui_config.add_argument_group("基本输入框(分组)", description="分组描述文本", gooey_options={"show_border": True, "columns": 1})
 
         # 文本输入框
         self.gui_config.add_argument(
@@ -91,6 +91,24 @@ class RunCode(Task):
                 "prefixIcon": "User",  # 前缀图标
                 "size": "large"  # 大小 large/default/small
             },
+        )
+        # 密码框
+        self.gui_config.add_argument(
+            "password",
+            metavar="密码框",
+            help="输入密码",
+            default="123456",
+            widget="PasswordField",
+            gooey_options={
+                "showPassword": True,  # 是否显示密码切换按钮
+                "placeholder": "请输入密码",  # 占位文本
+                "clearable": True,  # 是否可清空
+                "maxlength": 20,  # 最大长度
+                "minlength": 6,  # 最小长度
+                "size": "large",  # 大小
+                "prefixIcon": "Lock",  # 前缀图标
+                "autocomplete": "off"  # 自动完成
+            }
         )
 
         # 数字整数框
@@ -198,7 +216,7 @@ class RunCode(Task):
         )
 
         # --------------------------下拉分组-------------------------------------
-        self.gui_config.add_argument_group("选择下拉(分组)", gooey_options={"show_border": True, "columns": 2})
+        self.gui_config.add_argument_group("选择下拉(分组)", description="分组描述文本", gooey_options={"show_border": True, "columns": 1})
 
         # 多选下拉框
         self.gui_config.add_argument(
@@ -250,27 +268,8 @@ class RunCode(Task):
         # 添加组合布局演示菜单
         self.gui_config.add_menu("不常用组件", "其他不常用组件")
 
-        # 密码框
-        self.gui_config.add_argument(
-            "password",
-            metavar="密码框",
-            help="输入密码",
-            default="123456",
-            widget="PasswordField",
-            gooey_options={
-                "showPassword": True,  # 是否显示密码切换按钮
-                "placeholder": "请输入密码",  # 占位文本
-                "clearable": True,  # 是否可清空
-                "maxlength": 20,  # 最大长度
-                "minlength": 6,  # 最小长度
-                "size": "large",  # 大小
-                "prefixIcon": "Lock",  # 前缀图标
-                "autocomplete": "off"  # 自动完成
-            }
-        )
-
         # --------------------------文件目录选择框分组-------------------------------------
-        self.gui_config.add_argument_group("文件目录选择框(分组)", gooey_options={"show_border": True, "columns": 2})
+        self.gui_config.add_argument_group("文件目录选择框(分组)", description="分组描述文本", gooey_options={"show_border": True, "columns": 2})
 
         # 单文件选择框
         self.gui_config.add_argument(
@@ -340,7 +339,7 @@ class RunCode(Task):
         )
 
         # --------------------------单选复选分组-------------------------------------
-        self.gui_config.add_argument_group("单选复选(分组)", gooey_options={"show_border": True, "columns": 2})
+        self.gui_config.add_argument_group("单选复选(分组)", description="分组描述文本", gooey_options={"show_border": True, "columns": 1})
 
         # 单选框组
         self.gui_config.add_argument(
@@ -377,7 +376,7 @@ class RunCode(Task):
         )
 
         # --------------------------日期时间分组分组-------------------------------------
-        self.gui_config.add_argument_group("时间日期(分组)", gooey_options={"show_border": True, "columns": 2})
+        self.gui_config.add_argument_group("时间日期(分组)", description="分组描述文本", gooey_options={"show_border": True, "columns": 1})
 
         # 日期选择器
         self.gui_config.add_argument(
@@ -438,7 +437,7 @@ class RunCode(Task):
         )
 
         # --------------------------添加颜色选择器-------------------------------------
-        self.gui_config.add_argument_group("颜色选择器(分组)", gooey_options={"show_border": True, "columns": 1})
+        self.gui_config.add_argument_group("颜色选择器(分组)", description="分组描述文本", gooey_options={"show_border": True, "columns": 1})
 
         # 颜色选择器
         self.gui_config.add_argument(
@@ -466,7 +465,7 @@ class RunCode(Task):
             metavar="服务端口",
             help="输入启动服务的端口",
             type=int,
-            default=8080,
+            default=8090,
             widget="IntegerField",
             gooey_options={
                 "min": 0,  # 最小值
@@ -515,5 +514,49 @@ class RunCode(Task):
         elif dict_data["menuName"] == "不常用组件":
             self.process_args(dict_data)  # 运行交互参数的具体业务函数
         elif dict_data["menuName"] == "服务设置":
-            Sh_Serve = Server(port=dict_data["formData"]["port"], host='0.0.0.0', dict_data=dict_data, RunCode=self)
-            Sh_Serve.run(dict_data)  # 启动WEB服务
+            try:
+                self.runlog("开始启动服务")
+                # 检测是否为打包后的exe环境
+                Serverpy = 'Server.py'  # 此处填写你的Server.py文件，下面也必须修改
+                if Serverpy == 'Server.py':
+                    from public.Server import Server  # 此处填写你的Server.py文件名
+                else:
+                    raise Exception("请修改Server.py文件名")
+                # is_frozen = getattr(sys, 'frozen', False)
+                is_frozen = True
+                if is_frozen:
+                    # 打包后的环境
+                    self.runlog("检测到打包环境启动服务")
+                    Sh_Serve = Server(port=int(dict_data["formData"]["port"]), host='0.0.0.0', dict_data=dict_data)
+                    result = Sh_Serve.run(dict_data)  # 启动WEB服务
+
+                    if result.get("status") == "success":
+                        server_thread = result.get("thread")
+                        if server_thread:
+                            self.runlog(f"本地访问地址 http://127.0.0.1:{dict_data['formData']['port']}")
+                            self.runlog(f"API文档地址: http://127.0.0.1:{dict_data['formData']['port']}/docs")
+                            self.runlog(f"可以关闭本窗口,服务在后台运行,关闭主程序,服务停止运行")
+                            try:
+                                # 保持主线程运行，等待服务线程
+                                server_thread.join()
+                            except KeyboardInterrupt:
+                                self.runlog("收到中断信号，正在关闭服务...")
+                        else:
+                            self.runlog("服务线程创建失败", "error")
+                    else:
+                        self.runlog(f"服务启动失败: {result.get('message')}", "error")
+                else:
+                    # 开发环境，使用subprocess调用
+                    self.runlog("开发环境，使用命令行启动服务")
+                    dict_data_json = json.dumps(dict_data, ensure_ascii=False)
+                    dict_data_b64 = base64.b64encode(dict_data_json.encode('utf-8')).decode('ascii')
+                    # 获取当前文件所在目录，构建正确的Server.py路径
+                    current_dir = F"{os.getcwd()}/public/"
+                    server_path = os.path.join(current_dir, Serverpy)
+                    command = f'python "{server_path}" --port {dict_data["formData"]["port"]} --dict_data {dict_data_b64}'
+                    subprocess.run(command, shell=True)  # 启动服务
+
+            except ImportError as e:
+                self.runlog(f"导入Server模块失败: {e}", "error")
+            except Exception as e:
+                self.runlog(f"启动服务时发生错误: {e}", "error")

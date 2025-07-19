@@ -16,7 +16,7 @@ GUI_DESCRIPTION = F"{GUI_NAME}，致力于为用户提供简洁、高效、现�
 ICO_LOGO = "./ico/logo.png"  # 软件图标
 GUI_THEME = "light"  # 启动默认主题 light=白色主题,dark=黑色主题
 GUI_COLORS = "#CCCCFF"  # 主题副颜色 #CCCCFF=紫色主题 #99CCFF=蓝色主题 #99CCCC=绿色主题 #EEEEEE=灰色主题
-GUI_POWER = (1024, 1024)  # 分辨率
+GUI_POWER = (1024, 1080)  # 分辨率
 GUI_FULLSCREEN = True  # 是否允许最大化全屏
 GUI_FULLSCREENSTARTUP = False  # True=使用全屏启动  False=使用上面自定义尺寸
 PERSON = "微信:xikejian"  # 联系方式

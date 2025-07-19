@@ -169,7 +169,7 @@ app/WebDemo/RunCode.py
 # 添加表单组件演示菜单
 self.gui_config.add_menu("常用组件", "是一个组常用框体演示")
 # --------------------------添加基本输入框分组-------------------------------------
-self.gui_config.add_argument_group("基本输入框(分组)", description="基本的输入控件", gooey_options={"show_border": True, "columns": 2})
+self.gui_config.add_argument_group("基本输入框(分组)", description="分组描述", gooey_options={"show_border": True, "columns": 1})
 
 # 文本输入框
 self.gui_config.add_argument(
@@ -297,7 +297,7 @@ self.gui_config.add_argument(
 )
 
 # --------------------------下拉分组-------------------------------------
-self.gui_config.add_argument_group("选择下拉(分组)", gooey_options={"show_border": True, "columns": 2})
+self.gui_config.add_argument_group("选择下拉(分组)", description="分组描述", gooey_options={"show_border": True, "columns": 1})
 
 # 多选下拉框
 self.gui_config.add_argument(
@@ -369,7 +369,7 @@ self.gui_config.add_argument(
 )
 
 # --------------------------文件目录选择框分组-------------------------------------
-self.gui_config.add_argument_group("文件目录选择框(分组)", gooey_options={"show_border": True, "columns": 2})
+self.gui_config.add_argument_group("文件目录选择框(分组)", description="分组描述", gooey_options={"show_border": True, "columns": 2})
 
 # 单文件选择框
 self.gui_config.add_argument(
@@ -439,7 +439,7 @@ self.gui_config.add_argument(
 )
 
 # --------------------------单选复选分组-------------------------------------
-self.gui_config.add_argument_group("单选复选(分组)", gooey_options={"show_border": True, "columns": 2})
+self.gui_config.add_argument_group("单选复选(分组)", description="分组描述", gooey_options={"show_border": True, "columns": 1})
 
 # 单选框组
 self.gui_config.add_argument(
@@ -476,7 +476,7 @@ self.gui_config.add_argument(
 )
 
 # --------------------------日期时间分组分组-------------------------------------
-self.gui_config.add_argument_group("时间日期(分组)", gooey_options={"show_border": True, "columns": 2})
+self.gui_config.add_argument_group("时间日期(分组)", description="分组描述", gooey_options={"show_border": True, "columns": 1})
 
 # 日期选择器
 self.gui_config.add_argument(
@@ -537,7 +537,7 @@ self.gui_config.add_argument(
 )
 
 # --------------------------添加颜色选择器-------------------------------------
-self.gui_config.add_argument_group("颜色选择器(分组)", gooey_options={"show_border": True, "columns": 1})
+self.gui_config.add_argument_group("颜色选择器(分组)", description="分组描述", gooey_options={"show_border": True, "columns": 1})
 
 # 颜色选择器
 self.gui_config.add_argument(

@@ -55,6 +55,24 @@ def session_scope():
         session.close()
 
 
+class App(Base):
+    __tablename__ = 'apps'
+
+    id = Column(Integer, primary_key=True, autoincrement=True, comment='应用ID主键')
+    name = Column(String(100), nullable=False, comment='应用名称')
+    belongs = Column(Boolean, default=False, comment='应用归属')  # True=系统归属 False=客户添加
+    category = Column(String(50), nullable=False, comment='应用分类')
+    description = Column(Text, nullable=True, comment='应用描述')
+    icon = Column(String(255), nullable=True, comment='应用图标路径')
+    bgcolor = Column(String(50), default='#e6f7ff', comment='应用背景颜色')
+    type = Column(String(50), nullable=False, comment='应用类型')  # 应用类型 builtin = 应用软件, external = 外部软件 link = 链接
+    open = Column(String(1024), nullable=False, comment='打开命令或路径')  # 应用软件路径="WebMain.main_str" 外部软件路径="C:\Windows\System32\calc.exe" 链接="https://www.pptink.com"
+    recommend = Column(Boolean, default=False, comment='是否推荐')
+    isview = Column(Boolean, default=True, comment='是否可见')
+    created_at = Column(DateTime, default=datetime.datetime.now, comment='创建时间')
+    updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now, comment='更新时间')
+
+
 # 创建所有表
 def init_db():
     Base.metadata.create_all(engine)  # 创建所有表
