@@ -8,7 +8,7 @@ from diskcache import Cache  # 缓存
 DEBUG = True  # 开启DEBUG
 BRANDNAME = "PPtink"  # 品牌名
 SIGN = "WebDemo"  # 软件标识-自动生成勿修改
-GUI_NAME = f"PPtink桌面免费版"  # GUI名称
+GUI_NAME = f"PPtink桌面Mini版"  # GUI名称
 GUI_VERSION = "1.0.2"  # GUI版本
 GUI_DATE = "2025-03-23"  # 最新版发布日期
 GUI_INTRODUCE = "生命不止,奋斗不息!"  # 不超过10个字的广告语
